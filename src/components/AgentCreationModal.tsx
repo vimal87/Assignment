@@ -99,7 +99,7 @@ const AgentCreationModal: React.FC<AgentCreationModalProps> = ({ open, onClose }
             multiline
             rows={4}
             error={errors.systemPrompt}
-            helperText={errors.systemPrompt ? 'System prompt is required' : 'Instructions that define the agent\'s behavior and expertise'}
+            helperText={errors.systemPrompt ? 'System prompt is required' : ''}
           />
           
           <FormControl fullWidth margin="normal">
@@ -110,8 +110,8 @@ const AgentCreationModal: React.FC<AgentCreationModalProps> = ({ open, onClose }
               label="Model"
               onChange={(e) => setModel(e.target.value as 'gpt-3.5-turbo' | 'gpt-4')}
             >
-              <MenuItem value="gpt-3.5-turbo">GPT-3.5 Turbo (Faster, lower cost)</MenuItem>
-              <MenuItem value="gpt-4">GPT-4 (More capable, higher cost)</MenuItem>
+              <MenuItem value="gpt-3.5-turbo">GPT-3.5 Turbo</MenuItem>
+              <MenuItem value="gpt-4">GPT-4 </MenuItem>
             </Select>
           </FormControl>
           

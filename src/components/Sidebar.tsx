@@ -18,8 +18,7 @@ import {
   FormControl,
   Select,
   SelectChangeEvent,
-  Collapse,
-  Tooltip,
+  Collapse
 } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
 import {
@@ -38,7 +37,7 @@ import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { v4 as uuidv4 } from 'uuid';
 import { useChatContext } from '../context/ChatContext';
 import AgentCreationModal from './AgentCreationModal';
-import DraggableChat from './DraggableChat';
+import ChatListItem from './ChatListItem';
 
 const drawerWidth = 280;
 
@@ -85,11 +84,10 @@ const Sidebar: React.FC = () => {
   const [expandedFolders, setExpandedFolders] = useState<string[]>([]);
   const [newFolderName, setNewFolderName] = useState('');
   const [isCreatingFolder, setIsCreatingFolder] = useState(false);
-  const [editingFolderId, setEditingFolderId] = useState<string | null>(null);
   const [editingChatId, setEditingChatId] = useState<string | null>(null);
   const [newChatTitle, setNewChatTitle] = useState('');
   const [newFolderTitle, setNewFolderTitle] = useState('');
-
+  const [editingFolderId, setEditingFolderId] = useState<string | null>(null);
   const handleCreateNewChat = () => {
     const chatId = uuidv4();
     dispatch({
@@ -442,7 +440,7 @@ const Sidebar: React.FC = () => {
                         strategy={verticalListSortingStrategy}
                       >
                         {folderChats.map((chat) => (
-                          <DraggableChat
+                          <ChatListItem
                             key={chat.id}
                             id={chat.id}
                             title={chat.title}
@@ -462,7 +460,7 @@ const Sidebar: React.FC = () => {
               strategy={verticalListSortingStrategy}
             >
               {unfolderedChats.map((chat) => (
-                <DraggableChat
+                <ChatListItem
                   key={chat.id}
                   id={chat.id}
                   title={chat.title}
@@ -483,6 +481,7 @@ const Sidebar: React.FC = () => {
                 value={newFolderName}
                 onChange={(e) => setNewFolderName(e.target.value)}
                 onKeyDown={handleFolderNameKeyDown}
+                onBlur={() => setIsCreatingFolder(false)}
                 autoFocus
                 fullWidth
                 endAdornment={
