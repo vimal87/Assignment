@@ -401,7 +401,10 @@ const Sidebar: React.FC = () => {
                     secondaryAction={
                       <IconButton
                         edge="end"
-                        onClick={(e) => handleOpenFolderMenu(e, folder.id)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleOpenFolderMenu(e, folder.id);
+                        }}
                         size="small"
                       >
                         <MoreVertIcon fontSize="small" />
@@ -442,11 +445,14 @@ const Sidebar: React.FC = () => {
                         {folderChats.map((chat) => (
                           <ChatListItem
                             key={chat.id}
-                            id={chat.id}
                             title={chat.title}
                             isActive={state.activeChat === chat.id}
+                            isEditing={editingChatId === chat.id}
+                            editTitle={newChatTitle}
                             onClick={() => handleChatClick(chat.id)}
                             onMenuClick={(e) => handleOpenChatMenu(e, chat.id)}
+                            onEditChange={setNewChatTitle}
+                            onKeyDown={(e) => handleChatKeyDown(e, chat.id)}
                           />
                         ))}
                       </SortableContext>
@@ -462,11 +468,14 @@ const Sidebar: React.FC = () => {
               {unfolderedChats.map((chat) => (
                 <ChatListItem
                   key={chat.id}
-                  id={chat.id}
                   title={chat.title}
                   isActive={state.activeChat === chat.id}
+                  isEditing={editingChatId === chat.id}
+                  editTitle={newChatTitle}
                   onClick={() => handleChatClick(chat.id)}
                   onMenuClick={(e) => handleOpenChatMenu(e, chat.id)}
+                  onEditChange={setNewChatTitle}
+                  onKeyDown={(e) => handleChatKeyDown(e, chat.id)}
                 />
               ))}
             </SortableContext>

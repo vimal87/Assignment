@@ -4,40 +4,68 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  IconButton
+  IconButton,
+  InputBase,
 } from '@mui/material';
-import { Chat as ChatIcon, MoreVert as MoreVertIcon } from '@mui/icons-material';
+import { MessageCircle as ChatIcon, MoreVertical as MoreVertIcon } from 'lucide-react';
 
 interface ChatListItemProps {
-  id: string;
   title: string;
   isActive: boolean;
+  isEditing: boolean;
+  editTitle: string;
   onClick: () => void;
   onMenuClick: (event: React.MouseEvent<HTMLElement>) => void;
+  onEditChange: (value: string) => void;
+  onKeyDown: (event: React.KeyboardEvent) => void;
 }
 
 const ChatListItem: React.FC<ChatListItemProps> = ({
-  id,
   title,
   isActive,
+  isEditing,
+  editTitle,
   onClick,
   onMenuClick,
+  onEditChange,
+  onKeyDown,
 }) => {
   return (
     <ListItem
       disablePadding
       secondaryAction={
-        <IconButton edge="end" onClick={onMenuClick} size="small">
-          <MoreVertIcon fontSize="small" />
-        </IconButton>
+        !isEditing && (
+          <IconButton
+            edge="end"
+            onClick={onMenuClick}
+            size="small"
+          >
+            <MoreVertIcon />
+          </IconButton>
+        )
       }
     >
-      <ListItemButton onClick={onClick} selected={isActive} sx={{ pr: 6 }}>
-        <ListItemIcon>
-          <ChatIcon color={isActive ? 'primary' : 'inherit'} />
-        </ListItemIcon>
-        <ListItemText primary={title} />
-      </ListItemButton>
+      {isEditing ? (
+        <InputBase
+          value={editTitle}
+          onChange={(e) => onEditChange(e.target.value)}
+          onKeyDown={onKeyDown}
+          autoFocus
+          fullWidth
+          sx={{ pl: 4, pr: 2 }}
+        />
+      ) : (
+        <ListItemButton
+          onClick={onClick}
+          selected={isActive}
+          sx={{ pl: 4 }}
+        >
+          <ListItemIcon>
+            <ChatIcon />
+          </ListItemIcon>
+          <ListItemText primary={title} />
+        </ListItemButton>
+      )}
     </ListItem>
   );
 };
