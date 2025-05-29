@@ -22,6 +22,18 @@ const MessageInput: React.FC = () => {
     const activeAgent = state.agents.find(agent => agent.id === state.activeAgent);
     
     if (!activeAgent) return;
+
+    dispatch({
+      type: 'ADD_MESSAGE',
+      payload: {
+        chatId,
+        message: {
+          content: message.trim(),
+          sender: 'user',
+          attachments,
+        },
+      },
+    });
   
     setMessage('');
     setAttachments([]);

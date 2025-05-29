@@ -33,9 +33,10 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
           display: 'flex',
           flexDirection: isUser ? 'row-reverse' : 'row',
           alignItems: 'flex-start',
+          height: 'fit-content',
           gap: 1,
-          maxWidth: '90%',
-          width: '100%',
+          maxWidth: '75%',
+          width: 'fit-content',
         }}
       >
         <Avatar
@@ -63,7 +64,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
               color="text.secondary"
               sx={{ mr: isUser ? 0 : 1, ml: isUser ? 1 : 0 }}
             >
-              {isUser ? 'You' : 'Trading Assistant'}
+              {isUser ? 'User' : 'Assistant'}
             </Typography>
             
             {isStreaming && (
@@ -92,11 +93,14 @@ const ChatMessage: React.FC<ChatMessageProps> = ({ message }) => {
               borderRadius: 2,
               bgcolor: isUser ? 'primary.light' : 'background.paper',
               color: isUser ? 'primary.contrastText' : 'text.primary',
-              minWidth: '100px',
+              minWidth: '60px',
+              maxWidth: '100%',
+              width: 'auto',
               position: 'relative',
               overflow: 'hidden',
               border: 1,
               borderColor: 'divider',
+              wordBreak: 'break-word',
             }}
           >
             <Box className="markdown-content" sx={{ overflowWrap: 'break-word', wordBreak: 'break-word' }}>
